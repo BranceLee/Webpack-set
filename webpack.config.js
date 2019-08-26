@@ -33,6 +33,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname,"src",'index.html')
     }),
-    new webpack.HashedModuleIdsPlugin()
+    new webpack.HashedModuleIdsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV':JSON.stringify('production'),
+      IS_DEVELOPMENT:false
+    })
   ]
 };
