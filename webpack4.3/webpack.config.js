@@ -8,7 +8,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const autoprefixerPlugin = require('autoprefixer');
 
 module.exports = {
-  entry: { main: './src/index.js' },
+  entry: ['@babel/polyfill', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js'

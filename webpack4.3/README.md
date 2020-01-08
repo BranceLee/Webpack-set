@@ -39,3 +39,7 @@ The loader uses plugins from end to the beginning.
 ## devServer hot loader
 
 - To speed up the reload time, set hot loader in webpack, but there is an conflict output, so change `[chunckhash]` to `[hash]`.
+
+## babel-loader
+
+- The babel-loader will translate the ES6/7/8 to the ES5, but some new grammar like (promise, generator, Set, Maps, Proxy) will not be dealt and some browsers are not support these grammar, so we can use the babel/pollyfill enable these grammars.
