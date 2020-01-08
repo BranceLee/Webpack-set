@@ -4,7 +4,9 @@
 
 `webpack-md5-hash` is the plugin for when only change the hashId of the css file and will igonre the .js file name.
 
-## PostCSS provides with auto prefixer and ...
+## PostCSS
+
+provides with auto prefixer and ...
 
 ## CleanWebpackPlugin
 
