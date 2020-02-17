@@ -1,5 +1,6 @@
 // webpack v3
 const path = require('path');
+const fs = require('fs');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -8,15 +9,22 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const autoprefixerPlugin = require('autoprefixer');
 
 module.exports = {
-  entry: ['@babel/polyfill', './src/index.js'],
+  entry: [ '@babel/polyfill', './src/index.js' ],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[hash].js'
+    filename: '[name].[hash].js',
   },
 
   devServer: {
     contentBase: './dist',
-    hot: true
+    host: '0.0.0.0',
+    port: 3000,
+    hot: true,
+    https: {
+      key: fs.readFileSync('/Users/lee/server.key'),
+      cert: fs.readFileSync('/Users/lee/server.crt'),
+      ca: fs.readFileSync('/Users/lee/rootCA.pem'),
+    },
   },
 
   module: {
@@ -28,13 +36,13 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', '@babel/preset-react']
-            }
+              presets: [ '@babel/preset-env', '@babel/preset-react' ],
+            },
           },
           {
-            loader: 'eslint-loader'
-          }
-        ]
+            loader: 'eslint-loader',
+          },
+        ],
       },
       {
         test: /\.css$/,
@@ -45,10 +53,10 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: [autoprefixerPlugin]
-            }
-          }
-        ]
+              plugins: [ autoprefixerPlugin ],
+            },
+          },
+        ],
       },
       {
         test: /\.scss$/,
@@ -59,31 +67,30 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: [autoprefixerPlugin]
-            }
+              plugins: [ autoprefixerPlugin ],
+            },
           },
-          'sass-loader'
-        ]
-      }
-    ]
-  },
-
-  devServer: {
-    port: 3000,
-    hot: true
+          'sass-loader',
+        ],
+      },
+    ],
   },
 
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css'
+      filename: 'style.[contenthash].css',
     }),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
       template: './src/index.html',
-      filename: 'index.html'
+      filename: 'index.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true, //删除空白符与换行符
+      },
     }),
-    new WebpackMd5Hash()
-  ]
+    new WebpackMd5Hash(),
+  ],
 };
