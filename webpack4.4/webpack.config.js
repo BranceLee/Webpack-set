@@ -4,11 +4,14 @@ const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const autoprefixerPlugin = require('autoprefixer');
 
+const manifest = require('./dist/vendor-manifest.json');
+
 module.exports = {
-  entry: ['@babel/polyfill', './src/index.js'],
+  entry: { main: ['./src/index.js'] },
+
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js'
@@ -75,16 +78,23 @@ module.exports = {
     ]
   },
 
+  externals: {
+    react: 'react',
+    'react-dom': 'react-dom'
+  },
+
   plugins: [
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'style.[contenthash].css'
     }),
+
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
       template: './src/index.html',
       filename: 'index.html',
+      // chunks: ['vendor', 'main'],
+      vendor: './dist/' + manifest.name + '.js',
       minify: {
         removeComments: true,
         collapseWhitespace: true //删除空白符与换行符
