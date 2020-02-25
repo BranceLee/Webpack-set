@@ -81,7 +81,7 @@ module.exports = {
       cacheGroups: {
         vendor: {
           name: 'vendor',
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
           chunks: 'all',
           filename: '[name]/bundle.[hash].js',
           priority: 10 // Set the top priority to complie.

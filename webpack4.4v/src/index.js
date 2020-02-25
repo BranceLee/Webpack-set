@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route, Link, Switch } from 'react-router-dom';
+
 import './index.scss';
 import Modal from './components/Modal.jsx';
 import Home from './pages/Home.jsx';
