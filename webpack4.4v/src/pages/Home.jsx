@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function Home() {
-  return <div>Webpack home page</div>;
+  return <div className="pull-right">Webpack home page. </div>;
 }
