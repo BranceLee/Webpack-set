@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -13,18 +12,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js'
-  },
-
-  devServer: {
-    contentBase: 'dist',
-    host: '0.0.0.0',
-    port: 3000,
-    hot: true,
-    https: {
-      key: fs.readFileSync('/Users/lee/server.key'),
-      cert: fs.readFileSync('/Users/lee/server.crt'),
-      ca: fs.readFileSync('/Users/lee/rootCA.pem')
-    }
   },
 
   module: {
@@ -84,7 +71,7 @@ module.exports = {
           test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
           chunks: 'all',
           filename: '[name]/bundle.[hash].js',
-          priority: 10 // Set the top priority to complie.
+          priority: 10 // Set the top priority to compile.
         },
         common: {
           name: 'common',

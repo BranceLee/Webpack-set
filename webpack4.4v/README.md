@@ -42,4 +42,8 @@ The loader uses plugins from end to the beginning.
 
 ## babel-loader
 
-- The babel-loader will translate the ES6/7/8 to the ES5, but some new grammar like (promise, generator, Set, Maps, Proxy) will not be dealt and some browsers are not support these grammar, so we can use the babel/pollyfill enable these grammars.
+- The babel-loader will translate the ES6/7/8 to the ES5, but some new grammar like (promise, generator, Set, Maps, Proxy) will not be dealt and some browsers are not support these grammar, so we can use the babel/polyfill enable these grammars.
+
+## terser-webpack-plugin
+
+- To minify the `.js` file, and the plugin supports the uglify js file and remove the comments.
