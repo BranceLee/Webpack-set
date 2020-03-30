@@ -5,6 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const autoprefixerPlugin = require('autoprefixer');
+let HappyPack = require('happypack');
+let os = require('os');
+let happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
   entry: { main: ['@babel/polyfill', './src/index.js'] },
@@ -19,17 +22,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env', '@babel/preset-react']
-            }
-          },
-          {
-            loader: 'eslint-loader'
-          }
-        ]
+        use: ['happypack/loader?id=babel']
       },
       {
         test: /\.css$/,
@@ -86,6 +79,24 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin(),
+    new HappyPack({
+      id: 'babel',
+      loaders: [
+        {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        },
+        {
+          loader: 'eslint-loader'
+        }
+      ],
+      threadPool: happyThreadPool,
+      cache: true,
+      verbose: true
+    }),
+
     new MiniCssExtractPlugin({
       filename: 'style.[contenthash].css'
     }),
